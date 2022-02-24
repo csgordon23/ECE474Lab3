@@ -17,7 +17,11 @@
 //Defines for Part 2       
 #define NOTE_PERIOD         200
 #define SPEAKER_OFF         4000
-#define OC4A_PIN          DDH3
+#define OC4A_PIN            DDH3
+
+#define STATE_READY         0
+#define STATE_RUNNING       1
+#define STATE_SLEEPING      2
 
 unsigned long currentTime;
 
@@ -25,6 +29,8 @@ bool task1_en, task2_en, task3_en, task4_en, task5_en;
 
 //Holds the melody for strange encounters theme
 int melody[] = {293, 0, 329, 0, 261, 0, 130, 0, 196, 0};
+
+int t_curr;//Points to active task in the TaskList
 
 void setup() {
   Serial.begin(9600);
@@ -49,6 +55,14 @@ void setup() {
   task1_en = 1;
   task2_en = 1;
 
+
+  TCBStruct TaskList[10];//Create TCB list
+
+  TaskList[0].ftpr = task1();
+  TaskList[0].arg_ptr = NULL;
+  TaskList[0].state = STATE_READY;
+  
+
 }
 
 void loop() {
@@ -66,4 +80,24 @@ double freqConv (int inputFreq){
   Serial.print("Result:\n");
   Serial.print(result);
   return (double) (result - 1.0);
+}
+
+typedef struct TCBStruct{
+  void (*ftpr) (void *p);
+  void *arg_ptr;
+  unsigned short int state;
+  unsigned int delay;
+};
+
+void halt_me(){
+  TaskList[t_curr].state = STATE_READY;
+}
+
+void start_task(int taskID){
+  TaskList[taskID].state = STATE_RUNNING;
+}
+
+void delay(int d){
+  TaskList[t_curr].delay = d;
+  TaskList[t_curr].state = STATE_SLEEPING;
 }

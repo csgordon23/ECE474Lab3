@@ -7,6 +7,6 @@ void roundRobinScheduler() {
     task3();
     task4();
     task5();
-    delay(100);
+    delay(5);
   }
 }
