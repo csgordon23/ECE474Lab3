@@ -21,7 +21,7 @@
 
 unsigned long currentTime;
 
-bool task1_en, task2_en;
+bool task1_en, task2_en, task3_en, task4_en, task5_en;
 
 //Holds the melody for strange encounters theme
 int melody[] = {293, 0, 329, 0, 261, 0, 130, 0, 196, 0};
