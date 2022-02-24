@@ -54,8 +54,11 @@ byte displays[4] = {DIG1, DIG2, DIG3, DIG4};
 byte controller[5] = {0,0,0,0,0};
 byte controller2[5] = {0,4,0,0,0};
 
+void task1();
+void task2();
 void task3();
 void task4();
+void task5();
 void displayDigits();
 void increment();
 void freqDisplay();
