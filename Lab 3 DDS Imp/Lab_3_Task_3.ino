@@ -52,7 +52,7 @@ void increment() {
           controller2[i] = 9;
           alterCount = true;
         } else {
-          controller2[i] = val;
+          controller2[i] = byte(val);
         }
       }
     }
@@ -104,12 +104,17 @@ void freqDisplay(){
     }
     
     if(num >= 5) {
-
       num = 0;
       controller2[0] = 0;
       controller2[1] = 4;
       controller2[2] = 0;
       controller2[3] = 0;
     }
-
 } 
+
+void showSmile() {
+  controller2[0] = 10;
+  controller2[1] = 11;
+  controller2[2] = 12;
+  controller2[3] = 13;
+}
