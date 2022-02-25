@@ -46,6 +46,8 @@ unsigned long currentTime;
 bool task1_en, task2_en, task3_en, task4_en, task5_en;
 bool viewMode = true;
 
+int SSRIInteruptFlag;
+
 //Holds the melody for strange encounters theme
 int melody[] = {293, 0, 329, 0, 261, 0, 130, 0, 196, 0};
 byte digits[10]= {0xFC,0x60,0xDA,0xF2,0x66,0xB6,0xBE,0xE0,0xFE,0xE6};
@@ -63,8 +65,21 @@ void displayDigits();
 void increment();
 void freqDisplay();
 
+struct TCBSSRI;
+
+typedef struct TCBSSRI{
+  void (*ftpr) (int *p);
+  unsigned short int state;
+  unsigned int delay;
+};
+
+struct TCBSSRI TaskListSSRI[10];//Create TCB list
 
 int t_curr;//Points to active task in the TaskList
+
+ISR(TIMER1_COMPA_vect){
+    SSRIInteruptFlag = 1;
+  }
 
 void setup() {
   Serial.begin(9600);
@@ -83,18 +98,17 @@ void setup() {
   TCCR4B |= 1 << CS40; //16MHz clock
   OCR4A = 0; // Initially 0 
 
+  //Initialize timer 1 
+  TCCR1A |= 1 << COM1A0;
+  TCCR1B |= 1 << WGM12;
+  TCCR1B |= 1 << CS10; //16MHz clock
+  OCR1A = freqConv(500); // Every 2ms 
+
   // Setting output mode for all pins
   DDRH |= 1 << OC4A_PIN;
 
   task1_en = 1;
   task2_en = 1;
-
-
-  //TCBStruct TaskList[10];//Create TCB list
-
-  // TaskList[0].ftpr = task1();
-  // TaskList[0].arg_ptr = NULL;
-  // TaskList[0].state = STATE_READY;
 
   //Part 3 Setups
     DDRB |= DIG1REG | DIG2REG | DIG3REG | DIG4REG;
@@ -123,12 +137,7 @@ double freqConv (int inputFreq){
   return (double) (result - 1.0);
 }
 
-// typedef struct TCBStruct{
-//   void (*ftpr) (void *p);
-//   void *arg_ptr;
-//   unsigned short int state;
-//   unsigned int delay;
-// };
+
 
 // void halt_me(){
 //   TaskList[t_curr].state = STATE_READY;
