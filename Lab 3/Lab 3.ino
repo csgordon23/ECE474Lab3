@@ -41,12 +41,15 @@
 #define COUNTER_INCREMENT    100
 #define NOTE_PERIOD          200
 
+#define PENDING              0
+#define DONE                 1
+
 unsigned long currentTime;
 
 bool task1_en, task2_en, task3_en, task4_en, task5_en;
 bool viewMode = true;
 
-int SSRIInteruptFlag;
+int sFlag;
 
 //Holds the melody for strange encounters theme
 int melody[] = {293, 0, 329, 0, 261, 0, 130, 0, 196, 0};
@@ -78,7 +81,7 @@ struct TCBSSRI TaskListSSRI[10];//Create TCB list
 int t_curr;//Points to active task in the TaskList
 
 ISR(TIMER1_COMPA_vect){
-    SSRIInteruptFlag = 1;
+    sFlag = DONE;
   }
 
 void setup() {
@@ -122,7 +125,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  currentTime = millis();
+  // currentTime = millis();
   //task1();
   //task2();
   //task3();
