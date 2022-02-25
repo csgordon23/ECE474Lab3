@@ -41,7 +41,7 @@
 #define CLOCKREG             0x10
 #define CLOCKPIN             2
 #define COUNTER_INCREMENT    100
-#define NOTE_PERIOD          200
+// #define NOTE_PERIOD          200
 
 #define PENDING              0
 #define DONE                 1
@@ -127,7 +127,7 @@ void setup() {
   TCCR1A |= 1 << COM1A0;
   TCCR1B |= 1 << WGM12;
   TCCR1B |= 1 << CS10; //16MHz clock
-  OCR1A = freqConv(500); // Every 2ms 
+  OCR1A = freqConv(1000/2); // Every 2ms 
 
   // Setting output mode for all pins
   DDRH |= 1 << OC4A_PIN;

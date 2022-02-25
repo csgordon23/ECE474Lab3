@@ -1,5 +1,12 @@
 
-
+/**
+ * @brief Puts the function that called it to sleep state for t ms
+ * 
+ * Assigns t to delay of the TCB entry for the function where the sleep was called
+ * Sets the state in the TCB to sleeping
+ * 
+ * @param t time(ms) for the function to sleep
+ */
 void sleep_474(int t){
   TaskListSSRI[t_curr].delay = t;
   TaskListSSRI[t_curr].state = STATE_SLEEPING;
@@ -8,7 +15,12 @@ void sleep_474(int t){
 void task1_SSRI(void *p);
 void task2_SSRI(void *p);
 
-
+/**
+ * @brief Demo 2 for Lab 3, SRRI for task 1 and 2
+ * 
+ * Implements a SRRI scheduler for task 1 and 2.
+ * 
+ */
 void demo2SSRI() {
   sFlag = 0;
   TaskListSSRI[0].ftpr = (void *) task1_SSRI;
@@ -36,6 +48,13 @@ void demo2SSRI() {
   }
 }
 
+
+/**
+ * @brief Schedule Synchronizer for the SRRI schedulers
+ * 
+ * Synchronizes the schedule on a period of 2ms. Also stalls any extra time away when other tasks are not running.
+ * 
+ */
 void schedule_sync(){
   // Serial.println("Start of schedule_sync");
   int i = 0;
@@ -58,14 +77,21 @@ void schedule_sync(){
   sleep_474(0);
 }
 
+/**
+ * @brief Task1 in SRRI form.
+ * 
+ * Flashes LED on for 250ms then off for 750ms
+ * 
+ * @param p leave empty, for start_function function
+ */
 void task1_SSRI(void *p) {
   // Serial.println("Start of Task1");
-  if(currentTime % 1000 < 250){
+  if(currentTime % 1000 < LED_ON_TIME){
     PORTL |= LED_REG_BIT;
-    sleep_474(250);
+    sleep_474(LED_ON_TIME);
   } else {
     PORTL &= ~(LED_REG_BIT);
-    sleep_474(750);
+    sleep_474(LED_OFF_TIME);
   }
 }
 
@@ -78,7 +104,7 @@ void task1_SSRI(void *p) {
 void task2_SSRI(void *p) {
   static unsigned long previousSpeakerTime;
   static int melodyIndex;
-  static int spkrState = 1;//1 for playing, 0 for off
+  static int spkrState = STATE_ON;
   // Serial.print("Start of Task2\n");
 
   if(spkrState && currentTime - previousSpeakerTime > NOTE_PERIOD){
@@ -87,12 +113,12 @@ void task2_SSRI(void *p) {
     OCR4A = freqConv(melody[melodyIndex]);
     melodyIndex ++;
     if(melodyIndex == (sizeof(melody) / sizeof(int) + 1)){
-      spkrState = 0;
+      spkrState = STATE_OFF;
       melodyIndex = 0;
       // Serial.print("Long Sleep\n");
     }
   } else if (!spkrState && currentTime - previousSpeakerTime > SPEAKER_OFF){
-    spkrState = 1;
+    spkrState = STATE_ON;
   }
 
   sleep_474(100);
