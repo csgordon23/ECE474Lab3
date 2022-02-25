@@ -4,8 +4,6 @@
  *   Christian Gordon
  *   Marc Hernandez
  * 
- * 
- *
  */
 
 #define STATE_OFF           0
@@ -157,7 +155,6 @@ void loop() {
   //task1();
   //task2();
   //task3();
-  //task4();
   demo2SSRI();
   //demo4SSRI();
 
