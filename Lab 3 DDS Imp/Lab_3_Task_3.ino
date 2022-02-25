@@ -52,61 +52,64 @@ void increment() {
           controller2[i] = 9;
           alterCount = true;
         } else {
-          controller2[i] = byte(val);
+          controller2[i] = val;
         }
       }
     }
   }
 
   if((controller2[0] == 0) && (controller2[1] == 0) && (controller2[2] == 0) && (controller2[3] == 0)){
-    viewMode = !viewMode;
+    viewMode = false;
   }
   
 }                                                 
 
 void freqDisplay(){
   static unsigned long displayTime;
-  bool finish = false;
   static int num;
-    if(!finish) {
-      if(currentTime - displayTime > NOTE_PERIOD * 2){
-        displayTime = currentTime;
-        if(num == 0){
-          controller2[0] = 3;
-          controller2[1] = 9;
-          controller2[2] = 2;
-          controller2[3] = 0;        
-        } else if (num == 1){
-          controller2[0] = 9;
-          controller2[1] = 2;
-          controller2[2] = 3;
-          controller2[3] = 0; 
-        } else if (num == 2){
-          controller2[0] = 1;
-          controller2[1] = 6;
-          controller2[2] = 2;
-          controller2[3] = 0; 
-        } else if (num == 3){
-          controller2[0] = 0;
-          controller2[1] = 3;
-          controller2[2] = 1;
-          controller2[3] = 0; 
-        } else if (num == 4){
-          controller2[0] = 6;
-          controller2[1] = 9;
-          controller2[2] = 1;
-          controller2[3] = 0; 
-          finish = true;
-        }
+    if(millis() - displayTime > NOTE_PERIOD * 2){
+      displayTime = millis();
+      if(num == 0){
+        controller2[0] = 3;
+        controller2[1] = 9;
+        controller2[2] = 2;
+        controller2[3] = 0;
+        num++;        
+      } else if (num == 1){
+        controller2[0] = 9;
+        controller2[1] = 2;
+        controller2[2] = 3;
+        controller2[3] = 0;
+        num++; 
+      } else if (num == 2){
+        controller2[0] = 1;
+        controller2[1] = 6;
+        controller2[2] = 2;
+        controller2[3] = 0;
         num++;
+      } else if (num == 3){
+        controller2[0] = 0;
+        controller2[1] = 3;
+        controller2[2] = 1;
+        controller2[3] = 0;
+        num++;
+      } else if (num == 4){
+        controller2[0] = 6;
+        controller2[1] = 9;
+        controller2[2] = 1;
+        controller2[3] = 0;
+        num++;
+        viewMode = true;
       }
-    }else {
+    }
+    
+    if(num >= 5) {
+
       num = 0;
       controller2[0] = 0;
       controller2[1] = 4;
       controller2[2] = 0;
       controller2[3] = 0;
-      viewMode = true;
     }
 
 } 
