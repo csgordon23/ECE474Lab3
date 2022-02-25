@@ -3,6 +3,8 @@
  *
  *   Christian Gordon
  *   Marc Hernandez
+ * 
+ * 
  *
  */
 
@@ -44,6 +46,10 @@
 #define PENDING              0
 #define DONE                 1
 
+#define SERIAL_BAUD          9600
+
+#define CLOCK_RATE           16000000
+
 unsigned long currentTime;
 
 bool task1_en, task2_en, task3_en, task4_en, task5_en;
@@ -80,12 +86,26 @@ struct TCBSSRI TaskListSSRI[10];//Create TCB list
 
 int t_curr;//Points to active task in the TaskList
 
+
+/**
+ * @brief Construct a new ISR object
+ * 
+ * This ISR runs every 2ms and is used to syncrhonize the schedulers
+ * 
+ */
 ISR(TIMER1_COMPA_vect){
     sFlag = DONE;
   }
 
+/**
+ * @brief Initial Code run before the loop()
+ * 
+ * Sets up internal Registers to have expected behavior and initializes some global values used by the system.
+ * Also sets up timers, sets initial booleans.
+ * 
+ */
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(SERIAL_BAUD);
 
   t_curr = 0;
   
@@ -116,16 +136,24 @@ void setup() {
   task2_en = 1;
 
   //Part 3 Setups
-    DDRB |= DIG1REG | DIG2REG | DIG3REG | DIG4REG;
-    DDRE |= DATAREG | LATCHREG | CLOCKREG;
-    task4_en = 0;
-    task3_en = 1;
+  DDRB |= DIG1REG | DIG2REG | DIG3REG | DIG4REG;
+  DDRE |= DATAREG | LATCHREG | CLOCKREG;
+  task4_en = 0;
+  task3_en = 1;
 
 }
 
+
+/**
+ * @brief Main loop of system, calls scheduler for SRRI or DDS
+ * 
+ * For RR schedule, it loops continuously and calls the tasks each time the previous finishes.
+ * Otherwise it will call the proper SRRI or DDS scheduler and will go through the demo indicated by the function name
+ * 
+ */
 void loop() {
   // put your main code here, to run repeatedly:
-  // currentTime = millis();
+  currentTime = millis();
   //task1();
   //task2();
   //task3();
@@ -134,26 +162,17 @@ void loop() {
 
 }
 
+/**
+ * @brief Returns the COMP value that will create the input frequency
+ * 
+ * This assumes a clock of 16MHz and a prescaler of 1.
+ * 
+ * @param inputFreq Desired frequency of oscilation for the counter
+ * @return double Output COMP value to assign to the counter's compare register
+ */
 double freqConv (int inputFreq){
   float divdend = 2 * 1 * inputFreq;
-  float divsor = 16000000;
+  float divsor = CLOCK_RATE;
   float result = divsor / divdend;
-  // Serial.print("Result:\n");
-  // Serial.print(result);
   return (double) (result - 1.0);
 }
-
-
-
-// void halt_me(){
-//   TaskList[t_curr].state = STATE_READY;
-// }
-
-// void start_task(int taskID){
-//   TaskList[taskID].state = STATE_RUNNING;
-// }
-
-// void delay(int d){
-//   TaskList[t_curr].delay = d;
-//   TaskList[t_curr].state = STATE_SLEEPING;
-// }
