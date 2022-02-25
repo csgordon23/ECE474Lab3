@@ -59,7 +59,7 @@ void task5_DDS(void *p){
       segmentTime = millis();
     }
 
-    if(millis() - smileTime > 9000){
+    if(millis() - smileTime > 10000){
       smileTime = millis();
       smile = false;
     }
@@ -81,9 +81,10 @@ void task5_2_DDS(void *p) {
     OCR4A = 0;
     melodyPlayCount += 1;
     if((melodyPlayCount == 2) || (melodyPlayCount == 3)){
-      sleep_474_DDS(6000);
+      sleep_474_DDS(3000);
       TaskListDDS[3].state = STATE_READY;
       if(melodyPlayCount == 3){
+        smile = true;
         task_self_quit();
       }
     }
@@ -98,7 +99,6 @@ void task5_3_DDS(void *p) {
     if(viewMode){
       increment();
     } else {
-      smile = true;
       task_self_quit();
     }
   }
