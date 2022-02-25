@@ -1,3 +1,8 @@
+
+/**
+ * @brief Displays the digits on the 7-seg displays
+ * 
+ */
 void displayDigits(){
   for(int i = 0; i < 4; i++){
     for(int j = 0; j < 4; j++){
@@ -26,6 +31,10 @@ void displayDigits(){
   }
 }
 
+/**
+ * @brief Increases the value to be displayed on the 7-seg displays
+ * 
+ */
 void increment() {
   bool alterCount = true;
   if(task3_en && !task4_en){
@@ -64,6 +73,11 @@ void increment() {
   
 }                                                 
 
+
+/**
+ * @brief No idea what this does
+ * 
+ */
 void freqDisplay(){
   static unsigned long displayTime;
   bool finish = false;
