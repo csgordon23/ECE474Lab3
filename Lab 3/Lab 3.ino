@@ -83,6 +83,8 @@ ISR(TIMER1_COMPA_vect){
 
 void setup() {
   Serial.begin(9600);
+
+  t_curr = 0;
   
   //Part 1 Setups
   DDRL |= LED_REG_BIT;
@@ -123,8 +125,9 @@ void loop() {
   currentTime = millis();
   //task1();
   //task2();
-  task3();
+  //task3();
   //task4();
+  demo2SSRI();
 
 }
 
@@ -132,8 +135,8 @@ double freqConv (int inputFreq){
   float divdend = 2 * 1 * inputFreq;
   float divsor = 16000000;
   float result = divsor / divdend;
-  Serial.print("Result:\n");
-  Serial.print(result);
+  // Serial.print("Result:\n");
+  // Serial.print(result);
   return (double) (result - 1.0);
 }
 
