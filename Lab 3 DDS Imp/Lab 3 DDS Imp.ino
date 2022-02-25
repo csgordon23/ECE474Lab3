@@ -81,6 +81,7 @@ void task2_DDS(void *p);
 void task4_DDS(void *p);
 void task5_DDS(void *p);
 void task5_2_DDS(void *p);
+void showSmile(void *p);
 void task_self_quit();
 void start_function(void (*functionPTR)());
 //********************
@@ -114,8 +115,8 @@ typedef struct TCBDDS {
 TCBDDS TaskListDDS[NTASKS];
 void (*readyTasks[NTASKS])(void *p);
 void (*deadTasks[NTASKS])(void *p);
-int waitTimes[] = {0, 0, 0};
-int taskStates[] = {0, 0, 0};
+int waitTimes[] = {0, 0, 0, 0 ,0};
+int taskStates[] = {0, 0, 0, 0, 0};
 
 //*******************************
 
@@ -125,7 +126,7 @@ ISR(TIMER1_COMPA_vect){
     SSRIInteruptFlag = 1;
     //*******************************
     if(DDSMode){
-      for(int i = 0; i < 3; i++){
+      for(int i = 0; i < 5; i++){
         if(waitTimes[i] > 2) {
           waitTimes[i] -= 2;
         } else {
@@ -177,8 +178,9 @@ void setup() {
   //Part 3 Setups
     DDRB |= DIG1REG | DIG2REG | DIG3REG | DIG4REG;
     DDRE |= DATAREG | LATCHREG | CLOCKREG;
-    task4_en = 1;
+    task4_en = 0;
     task3_en = 0;
+    task5_en = 1;
   //Demo 3 DDS Scheduler*************
   // TaskListDDS[0].ftpr = task1_DDS;
   // TaskListDDS[0].state = STATE_READY;
@@ -225,7 +227,7 @@ void setup() {
   TaskListDDS[0].delay = -1;
 
   TaskListDDS[1].ftpr = task1_DDS;
-  TaskListDDS[1].state = STATE_DEAD;
+  TaskListDDS[1].state = STATE_READY;
   TaskListDDS[1].ID = 2;
   TaskListDDS[1].taskName = "LED";
   TaskListDDS[1].runtimes = 0;
@@ -238,7 +240,21 @@ void setup() {
   TaskListDDS[2].runtimes = 0;
   TaskListDDS[2].delay = -1;
 
-  TaskListDDS[3].ftpr = NULL;
+  TaskListDDS[3].ftpr = task5_3_DDS;
+  TaskListDDS[3].state = STATE_DEAD;
+  TaskListDDS[3].ID = 4;
+  TaskListDDS[3].taskName = "countdown";
+  TaskListDDS[3].runtimes = 0;
+  TaskListDDS[3].delay = -1;
+  
+  TaskListDDS[4].ftpr = showSmile;
+  TaskListDDS[4].state = STATE_DEAD;
+  TaskListDDS[4].ID = 4;
+  TaskListDDS[4].taskName = "smile";
+  TaskListDDS[4].runtimes = 0;
+  TaskListDDS[4].delay = -1;
+
+  TaskListDDS[5].ftpr = NULL;
   //*********************************
 }
 

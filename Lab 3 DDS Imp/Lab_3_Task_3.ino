@@ -16,6 +16,12 @@ void displayDigits(){
       }else{
         shiftOut(DATAPIN, CLOCKPIN, LSBFIRST, digits[controller2[i]]);
       }
+    } else if(!task3_en && !task4_en && task5_en) {
+      if(bitRead(controller3[4],i)==1){
+        shiftOut(DATAPIN, CLOCKPIN, LSBFIRST, controller3[i]);
+      }else{
+        shiftOut(DATAPIN, CLOCKPIN, LSBFIRST, digits[controller3[i]]);
+      }
     }
 
     digitalWrite(LATCHPIN, HIGH);
@@ -56,9 +62,24 @@ void increment() {
         }
       }
     }
+  } else if(!task3_en && !task4_en && task5_en){
+    for (int i = 0; i < 4; i++){
+      int val = int(controller3[i]);
+      if (alterCount == true) {
+        val--;
+        alterCount = false;
+        if (val < 0) {
+          controller3[i] = 9;
+          alterCount = true;
+        } else {
+          controller3[i] = byte(val);
+        }
+      }
+    }
   }
-
   if((controller2[0] == 0) && (controller2[1] == 0) && (controller2[2] == 0) && (controller2[3] == 0)){
+    viewMode = false;
+  } else if((controller3[0] == 0) && (controller3[1] == 0) && (controller3[2] == 0) && (controller3[3] == 0)){
     viewMode = false;
   }
   
@@ -111,10 +132,3 @@ void freqDisplay(){
       controller2[3] = 0;
     }
 } 
-
-void showSmile() {
-  controller2[0] = 10;
-  controller2[1] = 11;
-  controller2[2] = 12;
-  controller2[3] = 13;
-}

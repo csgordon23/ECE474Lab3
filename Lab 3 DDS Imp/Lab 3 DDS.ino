@@ -50,13 +50,18 @@ void task4_DDS(void *p){
 
 void task5_DDS(void *p){
   static unsigned long segmentTime;
-  TaskListDDS[1].state = STATE_READY;
+  static unsigned long smileTime;
 
   if(smile){
+    TaskListDDS[4].state = STATE_READY;
     displayDigits();
     if(millis() - segmentTime > COUNTER_INCREMENT) {
       segmentTime = millis();
-      showSmile();
+    }
+
+    if(millis() - smileTime > 9000){
+      smileTime = millis();
+      smile = false;
     }
   }
 }
@@ -71,16 +76,41 @@ void task5_2_DDS(void *p) {
     melodyIndex ++;
   }
 
-  if(melodyIndex == (sizeof(melody) / sizeof(int))) {
-    melodyPlayCount += 1;
-  }
-
-  if(melodyIndex == (sizeof(melody) / sizeof(int)) && melodyPlayCount >= 2){
+  if(melodyIndex == (sizeof(melody) / sizeof(int))){
     melodyIndex = 0;
     OCR4A = 0;
-    melodyPlayCount = 0;
-    sleep_474_DDS(3000);
-    smile = true;
+    melodyPlayCount += 1;
+    if((melodyPlayCount == 2) || (melodyPlayCount == 3)){
+      sleep_474_DDS(6000);
+      TaskListDDS[3].state = STATE_READY;
+      if(melodyPlayCount == 3){
+        task_self_quit();
+      }
+    }
+  }
+}
+
+void task5_3_DDS(void *p) {
+  static unsigned long segmentTime;
+  displayDigits();
+  if(millis() - segmentTime > COUNTER_INCREMENT) {
+    segmentTime = millis();
+    if(viewMode){
+      increment();
+    } else {
+      smile = true;
+      task_self_quit();
+    }
+  }
+}
+
+void showSmile(void *p) {
+  controller3[0] = 10;
+  controller3[1] = 11;
+  controller3[2] = 12;
+  controller3[3] = 13;
+  if(!smile){
+    task_self_quit();
   }
 }
 
