@@ -14,6 +14,7 @@ void sleep_474(int t){
 
 void task1_SSRI(void *p);
 void task2_SSRI(void *p);
+void task3_SSRI(void *p);
 
 /**
  * @brief Demo 2 for Lab 3, SRRI for task 1 and 2
@@ -48,6 +49,41 @@ void demo2SSRI() {
   }
 }
 
+/**
+ * @brief Demo 4 for Lab 3, SRRI for tasks 1 2 and 3
+ * 
+ * Sets up and runs an SRRI scheduler for tasks 1 2 and 3
+ * 
+ */
+void demo4SSRI() {
+  sFlag = 0;
+  TaskListSSRI[0].ftpr = (void *) task1_SSRI;
+  TaskListSSRI[0].state = STATE_READY;
+  TaskListSSRI[0].delay = -1;
+  TaskListSSRI[1].ftpr = (void *) task2_SSRI;
+  TaskListSSRI[1].state = STATE_READY;
+  TaskListSSRI[1].delay = -1;
+  TaskListSSRI[2].ftpr = (void *) task3_SSRI;
+  TaskListSSRI[2].state = STATE_READY;
+  TaskListSSRI[2].delay = -1;
+  TaskListSSRI[3].ftpr = &schedule_sync;
+  TaskListSSRI[3].state = STATE_READY;
+  TaskListSSRI[3].delay = NULL;
+  TaskListSSRI[4].ftpr  = NULL;
+  while(1){
+    currentTime = millis();
+    while(TaskListSSRI[t_curr].ftpr != NULL){
+      if(TaskListSSRI[t_curr].state == STATE_READY && TaskListSSRI[t_curr].state != STATE_RUNNING){
+        TaskListSSRI[t_curr].state = STATE_RUNNING;
+        start_function(TaskListSSRI[t_curr].ftpr);
+      }
+      t_curr ++;
+      
+    }
+    t_curr = 0;
+    TaskListSSRI[2].state = STATE_READY;//Ready to do schedule_sync
+  }
+}
 
 /**
  * @brief Schedule Synchronizer for the SRRI schedulers
@@ -99,7 +135,8 @@ void task1_SSRI(void *p) {
  * @brief Play melody array, then stop noise for 4 seconds, then repeat.
  * 
  * Task relies on SRRI scheduler.
- * 
+ *
+ * @param p leave empty, for start_function function 
  */
 void task2_SSRI(void *p) {
   static unsigned long previousSpeakerTime;
@@ -122,4 +159,14 @@ void task2_SSRI(void *p) {
   }
 
   sleep_474(100);
+}
+
+void task3_SSRI(void *p){
+  static unsigned long segmentTime;
+    displayDigits();
+    if(currentTime - segmentTime > COUNTER_INCREMENT){
+      segmentTime = currentTime;
+      increment();
+    } 
+    sleep_474(50);
 }

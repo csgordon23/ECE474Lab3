@@ -47,7 +47,6 @@ void task2() {
           melodyIndex = 0;
           currentState = STATE_OFF;//Turn off speaker
         }
-        sleep_474(SPEA)
       }
     } else {//Speaker is not making sound
       if(currentTime - previousSpeakerTime > SPEAKER_OFF){
