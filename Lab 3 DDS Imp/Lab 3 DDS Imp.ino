@@ -54,17 +54,22 @@ unsigned long currentTime;
 bool task1_en, task2_en, task3_en, task4_en, task5_en;
 bool viewMode = true;
 bool DDSMode = true;
+bool smile = false;
 
 int SSRIInteruptFlag;
+//**********************
 int melodyPlayCount = 0;
+//**********************
 //Holds the melody for strange encounters theme
 int melody[] = {293, 0, 329, 0, 261, 0, 130, 0, 196, 0};
-byte digits[10]= {0xFC,0x60,0xDA,0xF2,0x66,0xB6,0xBE,0xE0,0xFE,0xE6};
+byte digits[14]= {0xFC,0x60,0xDA,0xF2,0x66,0xB6,0xBE,0xE0,0xFE,0xE6, 0x4A, 0x90, 0x90, 0x26};
 byte reversedigits[10]= {0xE6,0xFE,0xE0, 0xBE, 0xB6, 0x66, 0xF2, 0xDA, 0x60, 0xFC};
 byte displays[4] = {DIG1, DIG2, DIG3, DIG4};
 byte controller[5] = {0,0,0,0,0};
 byte controller2[5] = {0,4,0,0,0};
+//*************************
 byte controller3[5] = {0,3,0,0,0};
+//*************************
 
 void task1();
 void task2();
@@ -74,6 +79,8 @@ void task5();
 void task1_DDS(void *p);
 void task2_DDS(void *p);
 void task4_DDS(void *p);
+void task5_DDS(void *p);
+void task5_2_DDS(void *p);
 void task_self_quit();
 void start_function(void (*functionPTR)());
 //********************
@@ -173,41 +180,66 @@ void setup() {
     task4_en = 1;
     task3_en = 0;
   //Demo 3 DDS Scheduler*************
-    // TaskListDDS[0].ftpr = task1_DDS;
-    // TaskListDDS[0].state = STATE_READY;
-    // TaskListDDS[0].ID = 1;
-    // TaskListDDS[0].taskName = "LED";
-    // TaskListDDS[0].runtimes = 0;
-    // TaskListDDS[0].delay = -1;
+  // TaskListDDS[0].ftpr = task1_DDS;
+  // TaskListDDS[0].state = STATE_READY;
+  // TaskListDDS[0].ID = 1;
+  // TaskListDDS[0].taskName = "LED";
+  // TaskListDDS[0].runtimes = 0;
+  // TaskListDDS[0].delay = -1;
 
-    // TaskListDDS[1].ftpr = task2_DDS;
-    // TaskListDDS[1].state = STATE_READY;
-    // TaskListDDS[1].ID = 2;
-    // TaskListDDS[1].taskName = "Tone";
-    // TaskListDDS[1].runtimes = 0;
-    // TaskListDDS[0].delay = -1;
+  // TaskListDDS[1].ftpr = task2_DDS;
+  // TaskListDDS[1].state = STATE_READY;
+  // TaskListDDS[1].ID = 2;
+  // TaskListDDS[1].taskName = "Tone";
+  // TaskListDDS[1].runtimes = 0;
+  // TaskListDDS[0].delay = -1;
 
-    // TaskListDDS[2].ftpr = NULL;
-    //********************************
+  // TaskListDDS[2].ftpr = NULL;
+  //********************************
 
-    //Demo 5 DDS Scheduler************
-    TaskListDDS[0].ftpr = task4_DDS;
-    TaskListDDS[0].state = STATE_READY;
-    TaskListDDS[0].ID = 1;
-    TaskListDDS[0].taskName = "Segs";
-    TaskListDDS[0].runtimes = 0;
-    TaskListDDS[0].delay = -1;
+  //Demo 5 DDS Scheduler************
+  // TaskListDDS[0].ftpr = task4_DDS;
+  // TaskListDDS[0].state = STATE_READY;
+  // TaskListDDS[0].ID = 1;
+  // TaskListDDS[0].taskName = "Segs";
+  // TaskListDDS[0].runtimes = 0;
+  // TaskListDDS[0].delay = -1;
 
-    TaskListDDS[1].ftpr = task2_DDS;
-    TaskListDDS[1].state = STATE_DEAD;
-    TaskListDDS[1].ID = 2;
-    TaskListDDS[1].taskName = "Tone";
-    TaskListDDS[1].runtimes = 0;
-    TaskListDDS[0].delay = -1;
+  // TaskListDDS[1].ftpr = task2_DDS;
+  // TaskListDDS[1].state = STATE_DEAD;
+  // TaskListDDS[1].ID = 2;
+  // TaskListDDS[1].taskName = "Tone";
+  // TaskListDDS[1].runtimes = 0;
+  // TaskListDDS[0].delay = -1;
 
-    TaskListDDS[2].ftpr = NULL;
-    //**********************************
+  // TaskListDDS[2].ftpr = NULL;
+  //**********************************
 
+
+  //Demo 6 DDS Scheduler**************
+  TaskListDDS[0].ftpr = task5_DDS;
+  TaskListDDS[0].state = STATE_READY;
+  TaskListDDS[0].ID = 1;
+  TaskListDDS[0].taskName = "Segs";
+  TaskListDDS[0].runtimes = 0;
+  TaskListDDS[0].delay = -1;
+
+  TaskListDDS[1].ftpr = task1_DDS;
+  TaskListDDS[1].state = STATE_DEAD;
+  TaskListDDS[1].ID = 2;
+  TaskListDDS[1].taskName = "LED";
+  TaskListDDS[1].runtimes = 0;
+  TaskListDDS[1].delay = -1;
+
+  TaskListDDS[2].ftpr = task5_2_DDS;
+  TaskListDDS[2].state = STATE_READY;
+  TaskListDDS[2].ID = 3;
+  TaskListDDS[2].taskName = "Tone";
+  TaskListDDS[2].runtimes = 0;
+  TaskListDDS[2].delay = -1;
+
+  TaskListDDS[3].ftpr = NULL;
+  //*********************************
 }
 
 void loop() {

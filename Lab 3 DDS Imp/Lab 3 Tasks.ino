@@ -64,17 +64,3 @@ void task3(){
   }
 
 }
-
-void task4_DDS(void *p){
-  static unsigned long segmentTime;
-  displayDigits();
-  if(millis() - segmentTime > COUNTER_INCREMENT) {
-    segmentTime = millis();
-    if(viewMode){
-      increment();
-    } else {
-      TaskListDDS[1].state = STATE_READY;
-      freqDisplay();
-    }
-  }
-}
