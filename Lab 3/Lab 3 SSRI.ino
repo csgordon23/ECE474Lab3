@@ -149,12 +149,12 @@ void task2_SSRI(void *p) {
     previousSpeakerTime = currentTime;
     OCR4A = freqConv(melody[melodyIndex]);
     melodyIndex ++;
-    if(melodyIndex == (sizeof(melody) / sizeof(int) + 1)){
+    if(melodyIndex == (sizeof(melody) / sizeof(int))){
       spkrState = STATE_OFF;
       melodyIndex = 0;
       // Serial.print("Long Sleep\n");
     }
-  } else if (!spkrState && currentTime - previousSpeakerTime > SPEAKER_OFF){
+  } else if (!spkrState && (currentTime - previousSpeakerTime > SPEAKER_OFF)){
     spkrState = STATE_ON;
     
   }
