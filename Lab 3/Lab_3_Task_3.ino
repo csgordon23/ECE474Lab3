@@ -69,7 +69,7 @@ void freqDisplay(){
   bool finish = false;
   static int num;
     if(!finish) {
-      if(currentTime - displayTime > NOTE_PERIOD * 3){
+      if(currentTime - displayTime > NOTE_PERIOD * 2){
         displayTime = currentTime;
         if(num == 0){
           controller2[0] = 3;

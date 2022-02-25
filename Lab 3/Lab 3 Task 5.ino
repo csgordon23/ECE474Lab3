@@ -37,8 +37,5 @@ void task5(){
       //Turn off smile
       currentState ++;
     }
-
-
   }
-
 }
