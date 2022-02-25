@@ -53,8 +53,10 @@ unsigned long currentTime;
 
 bool task1_en, task2_en, task3_en, task4_en, task5_en;
 bool viewMode = true;
+//**********************************
 bool DDSMode = true;
 bool smile = false;
+//**********************************
 
 int SSRIInteruptFlag;
 //**********************
@@ -81,13 +83,16 @@ void task2_DDS(void *p);
 void task4_DDS(void *p);
 void task5_DDS(void *p);
 void task5_2_DDS(void *p);
+void task5_3_DDS(void *p);
 void showSmile(void *p);
 void task_self_quit();
+void taskRevive();
 void start_function(void (*functionPTR)());
 //********************
 void displayDigits();
 void increment();
 void freqDisplay();
+
 
 
 struct TCBSSRI;
@@ -123,6 +128,7 @@ int taskStates[] = {0, 0, 0, 0, 0};
 int t_curr;//Points to active task in the TaskList
 
 ISR(TIMER1_COMPA_vect){
+
     SSRIInteruptFlag = 1;
     //*******************************
     if(DDSMode){

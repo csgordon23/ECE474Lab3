@@ -59,7 +59,7 @@ void task5_DDS(void *p){
       segmentTime = millis();
     }
 
-    if(millis() - smileTime > 10000){
+    if(millis() - smileTime > 11000){
       smileTime = millis();
       smile = false;
     }

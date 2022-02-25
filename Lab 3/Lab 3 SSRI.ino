@@ -81,7 +81,7 @@ void demo4SSRI() {
       
     }
     t_curr = 0;
-    TaskListSSRI[2].state = STATE_READY;//Ready to do schedule_sync
+    TaskListSSRI[3].state = STATE_READY;//Ready to do schedule_sync
   }
 }
 
@@ -156,9 +156,10 @@ void task2_SSRI(void *p) {
     }
   } else if (!spkrState && currentTime - previousSpeakerTime > SPEAKER_OFF){
     spkrState = STATE_ON;
+    
   }
-
   sleep_474(100);
+  
 }
 
 void task3_SSRI(void *p){
@@ -167,6 +168,6 @@ void task3_SSRI(void *p){
     if(currentTime - segmentTime > COUNTER_INCREMENT){
       segmentTime = currentTime;
       increment();
-    } 
+    }
     sleep_474(50);
 }
