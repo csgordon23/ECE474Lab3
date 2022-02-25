@@ -53,14 +53,14 @@ unsigned long currentTime;
 
 bool task1_en, task2_en, task3_en, task4_en, task5_en;
 bool viewMode = true;
-bool DDSMode = false;
+bool DDSMode = true;
 bool smile = false;
 
 int sFlag;
 int melodyPlayCount = 0;
 //Holds the melody for strange encounters theme
 int melody[] = {293, 0, 329, 0, 261, 0, 130, 0, 196, 0};
-byte digits[10]= {0xFC,0x60,0xDA,0xF2,0x66,0xB6,0xBE,0xE0,0xFE,0xE6};
+byte digits[14]= {0xFC,0x60,0xDA,0xF2,0x66,0xB6,0xBE,0xE0,0xFE,0xE6, 0x4A, 0x90, 0x90, 0x26};
 byte reversedigits[10]= {0xE6,0xFE,0xE0, 0xBE, 0xB6, 0x66, 0xF2, 0xDA, 0x60, 0xFC};
 byte displays[4] = {DIG1, DIG2, DIG3, DIG4};
 byte controller[5] = {0,0,0,0,0};
@@ -189,9 +189,9 @@ void setup() {
 
   task1_en = 1;
   task2_en = 1;
-  task3_en = 1;
+  task3_en = 0;
   task4_en = 0;
-  task5_en = 0;
+  task5_en = 1;
 
   //Demo 3 DDS Scheduler*************
   // TaskListDDS[0].ftpr = task1_DDS;
@@ -231,42 +231,42 @@ void setup() {
 
 
   //Demo 6 DDS Scheduler**************
-  // TaskListDDS[0].ftpr = task5_DDS;
-  // TaskListDDS[0].state = STATE_READY;
-  // TaskListDDS[0].ID = 1;
-  // TaskListDDS[0].taskName = "Segs";
-  // TaskListDDS[0].runtimes = 0;
-  // TaskListDDS[0].delay = -1;
+  TaskListDDS[0].ftpr = task5_DDS;
+  TaskListDDS[0].state = STATE_READY;
+  TaskListDDS[0].ID = 1;
+  TaskListDDS[0].taskName = "Segs";
+  TaskListDDS[0].runtimes = 0;
+  TaskListDDS[0].delay = -1;
 
-  // TaskListDDS[1].ftpr = task1_DDS;
-  // TaskListDDS[1].state = STATE_READY;
-  // TaskListDDS[1].ID = 2;
-  // TaskListDDS[1].taskName = "LED";
-  // TaskListDDS[1].runtimes = 0;
-  // TaskListDDS[1].delay = -1;
+  TaskListDDS[1].ftpr = task1_DDS;
+  TaskListDDS[1].state = STATE_READY;
+  TaskListDDS[1].ID = 2;
+  TaskListDDS[1].taskName = "LED";
+  TaskListDDS[1].runtimes = 0;
+  TaskListDDS[1].delay = -1;
 
-  // TaskListDDS[2].ftpr = task5_2_DDS;
-  // TaskListDDS[2].state = STATE_READY;
-  // TaskListDDS[2].ID = 3;
-  // TaskListDDS[2].taskName = "Tone";
-  // TaskListDDS[2].runtimes = 0;
-  // TaskListDDS[2].delay = -1;
+  TaskListDDS[2].ftpr = task5_2_DDS;
+  TaskListDDS[2].state = STATE_READY;
+  TaskListDDS[2].ID = 3;
+  TaskListDDS[2].taskName = "Tone";
+  TaskListDDS[2].runtimes = 0;
+  TaskListDDS[2].delay = -1;
 
-  // TaskListDDS[3].ftpr = task5_3_DDS;
-  // TaskListDDS[3].state = STATE_DEAD;
-  // TaskListDDS[3].ID = 4;
-  // TaskListDDS[3].taskName = "countdown";
-  // TaskListDDS[3].runtimes = 0;
-  // TaskListDDS[3].delay = -1;
+  TaskListDDS[3].ftpr = task5_3_DDS;
+  TaskListDDS[3].state = STATE_DEAD;
+  TaskListDDS[3].ID = 4;
+  TaskListDDS[3].taskName = "countdown";
+  TaskListDDS[3].runtimes = 0;
+  TaskListDDS[3].delay = -1;
   
-  // TaskListDDS[4].ftpr = showSmile;
-  // TaskListDDS[4].state = STATE_DEAD;
-  // TaskListDDS[4].ID = 4;
-  // TaskListDDS[4].taskName = "smile";
-  // TaskListDDS[4].runtimes = 0;
-  // TaskListDDS[4].delay = -1;
+  TaskListDDS[4].ftpr = showSmile;
+  TaskListDDS[4].state = STATE_DEAD;
+  TaskListDDS[4].ID = 4;
+  TaskListDDS[4].taskName = "smile";
+  TaskListDDS[4].runtimes = 0;
+  TaskListDDS[4].delay = -1;
 
-  // TaskListDDS[5].ftpr = NULL;
+  TaskListDDS[5].ftpr = NULL;
   //*********************************
 
 }
@@ -282,11 +282,11 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   currentTime = millis();
-  //task1();
-  //task2();
+  // task1();
+  // task2();
   //task3();
   //demo2SSRI();
-  demo4SSRI();
+  //demo4SSRI();
   if(DDSMode){
     for(t_curr = 0; t_curr < NTASKS; t_curr++) {
         if((TaskListDDS[t_curr].ftpr != NULL) && (TaskListDDS[t_curr].state != STATE_SLEEPING) && (TaskListDDS[t_curr].state != STATE_DEAD)) {
