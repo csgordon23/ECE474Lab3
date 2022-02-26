@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['datapin_0',['DATAPIN',['../_lab__3___final_8ino.html#a08685c1b3583762920c614f2aaecae19',1,'Lab_3_Final.ino']]],
+  ['datareg_1',['DATAREG',['../_lab__3___final_8ino.html#a9136164d78205f6d2df932e299576b78',1,'Lab_3_Final.ino']]],
+  ['ddsmode_2',['DDSMode',['../_lab__3___final_8ino.html#a1ecde5503290ba1a0c22a599e4021204',1,'Lab_3_Final.ino']]],
+  ['deadtasks_3',['deadTasks',['../_lab__3___final_8ino.html#ab406aaad31ec0ab54b4fb47cd24b50fd',1,'Lab_3_Final.ino']]],
+  ['delay_4',['delay',['../struct_t_c_b_s_s_r_i.html#a305d478e35a620250866e80440c0f476',1,'TCBSSRI::delay()'],['../struct_t_c_b_d_d_s.html#a79983139eaf51de77022e9921fada0b8',1,'TCBDDS::delay()']]],
+  ['demo2ssri_5',['demo2SSRI',['../_lab__3___s_r_r_i_8ino.html#a475b045c121e4ebe755da506a8a6a67d',1,'Lab_3_SRRI.ino']]],
+  ['demo4ssri_6',['demo4SSRI',['../_lab__3___s_r_r_i_8ino.html#aed482b8f07b5aa1f8db5a168495e94ca',1,'Lab_3_SRRI.ino']]],
+  ['dig1_7',['DIG1',['../_lab__3___final_8ino.html#a0a0cf8e6f119a2d319ec2061d08aae7e',1,'Lab_3_Final.ino']]],
+  ['dig1reg_8',['DIG1REG',['../_lab__3___final_8ino.html#a34a80e89c121d8811f731e48d6b48a05',1,'Lab_3_Final.ino']]],
+  ['dig2_9',['DIG2',['../_lab__3___final_8ino.html#ab72bba69fa2e258875e66bfb2a400c96',1,'Lab_3_Final.ino']]],
+  ['dig2reg_10',['DIG2REG',['../_lab__3___final_8ino.html#a49b06ff510f792eba560b7d41a31121d',1,'Lab_3_Final.ino']]],
+  ['dig3_11',['DIG3',['../_lab__3___final_8ino.html#a007999c477cc2af52639234daae53263',1,'Lab_3_Final.ino']]],
+  ['dig3reg_12',['DIG3REG',['../_lab__3___final_8ino.html#af5506c4897c8a2341d581c018a5f1ab2',1,'Lab_3_Final.ino']]],
+  ['dig4_13',['DIG4',['../_lab__3___final_8ino.html#ac585a646da18d5c387aea78deeea218c',1,'Lab_3_Final.ino']]],
+  ['dig4reg_14',['DIG4REG',['../_lab__3___final_8ino.html#ae3dd716ca4de0587987dbecd787995ee',1,'Lab_3_Final.ino']]],
+  ['digits_15',['digits',['../_lab__3___final_8ino.html#a1ed4720079bdc3340e513d4ebaf9d952',1,'Lab_3_Final.ino']]],
+  ['displaydigits_16',['displayDigits',['../_lab__3__7segment_8ino.html#acd542a80c996c49cf7650b17b6884f32',1,'displayDigits():&#160;Lab_3_7segment.ino'],['../_lab__3___final_8ino.html#acd542a80c996c49cf7650b17b6884f32',1,'displayDigits():&#160;Lab_3_7segment.ino']]],
+  ['displays_17',['displays',['../_lab__3___final_8ino.html#ab2e76e5bf553c72b8bfb1417b394c325',1,'Lab_3_Final.ino']]],
+  ['done_18',['DONE',['../_lab__3___final_8ino.html#abe6b865c045f3e7c6892ef4f15ff5779',1,'Lab_3_Final.ino']]]
+];
