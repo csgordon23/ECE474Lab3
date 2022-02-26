@@ -1,4 +1,11 @@
 /**
+ *  @file Lab_3_RR_Tasks.c
+ *  
+ *  This file contains methods needed for the RR to function
+ *
+ */
+
+/**
  * @brief Executes Task 1, LED on for 250ms off for 750
  * 
  * Basic RR scheduled task for 1, requires task1_en to be true and

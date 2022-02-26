@@ -1,3 +1,20 @@
+/**
+ *  @file Lab_3_7segment.c
+ *  
+ *  This file contains methods needed to the 7-segment display to function
+ *
+ */
+
+/**
+ * @brief Utilizes the a shift register to illuminate segments of the 7-segment display
+ * 
+ * This function loops through each of the digits on the 7-segment display and shifts
+ * in bit values in the order of LSBFIRST. These values are found in the digits array
+ * and the current digit needed to be displayed is found in the controllers array.
+ * If task3_en, controller[5] is used, If task4_en controller2[5] is used, and if task5_en
+ * contoller3[5] is used. Only one may be enabled at a time.
+ * 
+ */
 void displayDigits(){
   for(int i = 0; i < 4; i++){
     for(int j = 0; j < 4; j++){
@@ -32,6 +49,14 @@ void displayDigits(){
   }
 }
 
+/**
+ * @brief This function increments of decrements the current count that will be displayed on the 7-segment display
+ * 
+ * These values are found in the digits array, If task3_en, controller[5] is updated, If task4_en controller2[5] is updated, 
+ * and if task5_en contoller3[5] is updated. Only one may be enabled at a time. If task4_en or task5_en is true, then the 
+ * function will behave differently and decrement the count from 4 second to 0 or 3 seconds to 0 respectively.
+ * 
+ */
 void increment() {
   bool alterCount = true;
   if(task3_en && !task4_en){
@@ -85,6 +110,14 @@ void increment() {
   
 }                                                 
 
+/**
+ * @brief This function is called in task4 and task5
+ * 
+ * These values are found in the digits array, If task3_en, controller[5] is updated, If task4_en controller2[5] is updated, 
+ * and if task5_en contoller3[5] is updated. Only one may be enabled at a time. If task4_en or task5_en is true, then the 
+ * function will behave differently and decrement the count from 4 second to 0 or 3 seconds to 0 respectively.
+ * 
+ */
 void freqDisplay(){
   static unsigned long displayTime;
   static int num;

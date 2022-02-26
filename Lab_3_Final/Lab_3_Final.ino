@@ -1,9 +1,11 @@
-/* University of Washington
- * ECE/CSE 474,  01/25/2022
- *
- *   Christian Gordon
- *   Marc Hernandez
- * 
+/*Lab_3_Final.cpp
+ * @file   Lab_3_Final.cpp
+ *   @author    Christian Gordon, Marc Hernandez
+ *   @date      25-Feb-2022
+ *   @brief   Lab 3 Schedulers in Arduino
+ *   
+ *  This code contains the methods and functions needed for Lab 3
+ *  for winter 2022 EE 474
  */
 
 #define STATE_OFF           0
@@ -117,7 +119,8 @@ int t_curr;//Points to active task in the TaskList
 /**
  * @brief Construct a new ISR object
  * 
- * This ISR runs every 2ms and is used to syncrhonize the schedulers
+ * This ISR runs every 2ms and is used to syncrhonize the schedulers if DDSMode is
+ * set true then the syncrhonization takes place within the ISR
  * 
  */
 ISR(TIMER1_COMPA_vect){
@@ -142,12 +145,13 @@ ISR(TIMER1_COMPA_vect){
  * @brief Initial Code run before the loop()
  * 
  * Sets up internal Registers to have expected behavior and initializes some global values used by the system.
- * Also sets up timers, sets initial booleans.
+ * Also sets up timers, sets initial booleans. DDSMode must be set to alter the clock to meet the DDS requirements.
  * 
  */
 void setup() {
   Serial.begin(SERIAL_BAUD);
 
+  //The current active task
   t_curr = 0;
   
   //Part 1 Setups
@@ -282,9 +286,8 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   currentTime = millis();
-  // task1();
-  // task2();
-  //task3();
+  //task1();
+  //task2();
   //demo2SSRI();
   //demo4SSRI();
   if(DDSMode){

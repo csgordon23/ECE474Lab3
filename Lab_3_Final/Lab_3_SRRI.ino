@@ -1,4 +1,11 @@
 /**
+ *  @file Lab_3_SRRI.c
+ *  
+ *  This file contains methods needed for the SRRI to function
+ *
+ */
+
+/**
  * @brief Puts the function that called it to sleep state for t ms
  * 
  * Assigns t to delay of the TCB entry for the function where the sleep was called
@@ -11,9 +18,9 @@ void sleep_474(int t){
   TaskListSSRI[t_curr].state = STATE_SLEEPING;
 }
 
-void task1_SSRI(void *p);
-void task2_SSRI(void *p);
-void task3_SSRI(void *p);
+void task1_SSRI(void *p); ///
+void task2_SSRI(void *p); ///
+void task3_SSRI(void *p); ///
 
 /**
  * @brief Demo 2 for Lab 3, SRRI for task 1 and 2
@@ -91,7 +98,6 @@ void demo4SSRI() {
  * 
  */
 void schedule_sync(){
-  // Serial.println("Start of schedule_sync");
   int i = 0;
   int j = 0;
   while(sFlag == PENDING){
@@ -107,8 +113,6 @@ void schedule_sync(){
     i++;
     sFlag = PENDING;
   }
-  // Serial.print("Task 2 delay: ");
-  // Serial.println(TaskListSSRI[1].delay);
   sleep_474(0);
 }
 
@@ -120,7 +124,6 @@ void schedule_sync(){
  * @param p leave empty, for start_function function
  */
 void task1_SSRI(void *p) {
-  // Serial.println("Start of Task1");
   if(currentTime % 1000 < LED_ON_TIME){
     PORTL |= LED_REG_BIT;
     sleep_474(LED_ON_TIME);
